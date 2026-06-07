@@ -272,7 +272,14 @@
     </div>
 
     <script>
-        const guestForm = document.getElementById('guest-form');
+        // Jika ada parameter nama, redirect ke index.html
+        const params = new URLSearchParams(window.location.search);
+        if (params.has('nama')) {
+            window.location.href = '/?nama=' + params.get('nama');
+        }
+    </script>
+
+    <script>
         const guestNameInput = document.getElementById('guest-name');
         const btnGenerate = document.getElementById('btn-generate');
         const resultSection = document.getElementById('result-section');
@@ -315,10 +322,18 @@
 
         // Generate shareable link
         function generateLink(name) {
-            // Gunakan origin (domain) saja
-            const origin = window.location.origin;
+            // Gunakan path relatif agar bekerja di lokal dan hosting
             const encodedName = encodeURIComponent(name);
-            return `${origin}/?nama=${encodedName}`;
+            
+            // Cek apakah di hosting atau lokal
+            if (window.location.protocol === 'file:') {
+                // Untuk lokal: gunakan relative path
+                return `./index.html?nama=${encodedName}`;
+            } else {
+                // Untuk hosting: gunakan full URL
+                const origin = window.location.origin;
+                return `${origin}/?nama=${encodedName}`;
+            }
         }
 
         // Display all guests

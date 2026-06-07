@@ -35,7 +35,7 @@
 
         const updateGreeting = (name) => {
           if (name && name.trim()) {
-            guestGreeting.innerHTML = `Kepada <strong style="color: var(--gold-light);">${name}</strong><br><span style="font-size: 0.9rem; margin-top: 5px; display: block;">Tamu Undangan Terhormat</span>`;
+            guestGreeting.innerHTML = `Kepada<br><strong style="font-size: 1.5rem; color: var(--gold-light);">${name}</strong><br><span style="font-size: 0.9rem; margin-top: 8px; display: block;">Tamu Undangan Terhormat</span>`;
             return true;
           }
           return false;

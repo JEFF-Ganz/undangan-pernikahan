@@ -29,6 +29,28 @@ try {
 const btnOpen = document.getElementById('btn-open');
 const welcomeOverlay = document.getElementById('welcome-overlay');
 const bgMusic = document.getElementById('bg-music');
+const guestGreeting = document.getElementById('guest-greeting');
+
+// Get guest name from URL parameter
+const getGuestNameFromUrl = () => {
+  const params = new URLSearchParams(window.location.search);
+  return params.get('nama') || '';
+};
+
+// Update greeting with guest name
+const updateGreeting = (name) => {
+  if (name && name.trim()) {
+    guestGreeting.innerHTML = `Kepada <strong style="color: var(--gold-light);">${name}</strong><br><span style="font-size: 0.9rem; margin-top: 5px; display: block;">Tamu Undangan Terhormat</span>`;
+    return true;
+  }
+  return false;
+};
+
+// Initialize - load guest name from URL
+const initialGuestName = getGuestNameFromUrl();
+if (initialGuestName) {
+  updateGreeting(initialGuestName);
+}
 
 const openInvitation = () => {
   welcomeOverlay.classList.add('hidden');

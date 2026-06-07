@@ -100,7 +100,13 @@
         setInterval(updateCountdown, 1000);
         updateCountdown();
 
-        // --- 5. Copy Rekening ---
+        // --- 5. Gallery Interaction ---
+        const marquee = document.getElementById('marquee');
+        if (marquee) {
+          marquee.addEventListener('click', () => {
+            marquee.classList.toggle('paused');
+          });
+        }
         function copyRekening(elementId, btn) {
             const rekText = document.getElementById(elementId).innerText;
             navigator.clipboard.writeText(rekText).then(() => {

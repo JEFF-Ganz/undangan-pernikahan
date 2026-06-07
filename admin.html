@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Undangan Pernikahan</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', Arial, sans-serif;
+            background: linear-gradient(135deg, #5C001E 0%, #3d0114 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .admin-container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        h1 {
+            color: #5C001E;
+            margin-bottom: 10px;
+            text-align: center;
+            font-size: 28px;
+        }
+
+        .subtitle {
+            color: #666;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            font-family: 'Montserrat', Arial, sans-serif;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #D4AF37;
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 25px;
+        }
+
+        button {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-family: 'Montserrat', Arial, sans-serif;
+        }
+
+        .btn-generate {
+            background: linear-gradient(135deg, #D4AF37, #f3d47a);
+            color: #5C001E;
+        }
+
+        .btn-generate:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3);
+        }
+
+        .btn-reset {
+            background: #eee;
+            color: #333;
+        }
+
+        .btn-reset:hover {
+            background: #ddd;
+        }
+
+        .result-section {
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 2px solid #eee;
+            display: none;
+        }
+
+        .result-section.show {
+            display: block;
+        }
+
+        .result-title {
+            color: #5C001E;
+            font-weight: 600;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .guest-list {
+            background: #f9f9f9;
+            border-radius: 6px;
+            max-height: 300px;
+            overflow-y: auto;
+            padding: 15px;
+        }
+
+        .guest-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            background: white;
+            margin-bottom: 10px;
+            border-radius: 6px;
+            border-left: 4px solid #D4AF37;
+            gap: 10px;
+        }
+
+        .guest-name {
+            font-weight: 600;
+            color: #333;
+            flex: 1;
+        }
+
+        .guest-link {
+            font-size: 12px;
+            color: #666;
+            word-break: break-all;
+            flex: 2;
+            background: #f0f0f0;
+            padding: 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .btn-copy {
+            padding: 6px 12px;
+            background: #D4AF37;
+            color: #5C001E;
+            border: none;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            white-space: nowrap;
+            transition: all 0.3s;
+        }
+
+        .btn-copy:hover {
+            background: #f3d47a;
+        }
+
+        .btn-delete {
+            padding: 6px 12px;
+            background: #ff4757;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            white-space: nowrap;
+            transition: all 0.3s;
+        }
+
+        .btn-delete:hover {
+            background: #ff3838;
+        }
+
+        .copy-feedback {
+            display: none;
+            color: #27ae60;
+            font-size: 12px;
+            margin-left: 10px;
+            animation: fadeInOut 2s ease-in-out forwards;
+        }
+
+        @keyframes fadeInOut {
+            0% { opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        .empty-message {
+            color: #999;
+            text-align: center;
+            padding: 20px;
+            font-style: italic;
+        }
+
+        .info-box {
+            background: #f0f8ff;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin-bottom: 25px;
+            border-radius: 4px;
+            font-size: 13px;
+            color: #333;
+            line-height: 1.5;
+        }
+
+        .info-box strong {
+            color: #2196F3;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <h1>🎊 Admin Panel Undangan</h1>
+        <p class="subtitle">Kelola nama tamu undangan Rahmat & Novi</p>
+
+        <div class="info-box">
+            <strong>💡 Cara Penggunaan:</strong><br>
+            1. Masukkan nama tamu<br>
+            2. Klik "Generate Link"<br>
+            3. Salin link dan bagikan ke tamu<br>
+            4. Tamu akan melihat nama mereka otomatis
+        </div>
+
+        <form id="guest-form">
+            <div class="form-group">
+                <label for="guest-name">Nama Tamu</label>
+                <input type="text" id="guest-name" placeholder="Contoh: Budi Santoso" maxlength="100" required>
+            </div>
+
+            <div class="button-group">
+                <button type="button" id="btn-generate" class="btn-generate">Generate Link</button>
+                <button type="reset" class="btn-reset">Clear</button>
+            </div>
+        </form>
+
+        <div id="result-section" class="result-section">
+            <div class="result-title">Daftar Tamu</div>
+            <div id="guest-list" class="guest-list">
+                <div class="empty-message">Belum ada tamu. Mulai dengan menambah tamu.</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const guestForm = document.getElementById('guest-form');
+        const guestNameInput = document.getElementById('guest-name');
+        const btnGenerate = document.getElementById('btn-generate');
+        const resultSection = document.getElementById('result-section');
+        const guestListContainer = document.getElementById('guest-list');
+
+        // Load guests from localStorage
+        let guests = JSON.parse(localStorage.getItem('guests')) || [];
+
+        // Display guests on page load
+        displayGuests();
+
+        // Generate Link
+        btnGenerate.addEventListener('click', () => {
+            const name = guestNameInput.value.trim();
+            
+            if (!name) {
+                alert('Mohon masukkan nama tamu');
+                return;
+            }
+
+            // Check if guest already exists
+            if (guests.some(g => g.name.toLowerCase() === name.toLowerCase())) {
+                alert('Nama tamu ini sudah ada!');
+                return;
+            }
+
+            // Add guest
+            const guest = {
+                id: Date.now(),
+                name: name,
+                link: generateLink(name)
+            };
+
+            guests.push(guest);
+            saveGuests();
+            displayGuests();
+            guestForm.reset();
+            guestNameInput.focus();
+        });
+
+        // Generate shareable link
+        function generateLink(name) {
+            const baseUrl = window.location.origin + window.location.pathname.replace('admin.html', 'index.html');
+            const encodedName = encodeURIComponent(name);
+            return `${baseUrl}?nama=${encodedName}`;
+        }
+
+        // Display all guests
+        function displayGuests() {
+            if (guests.length === 0) {
+                guestListContainer.innerHTML = '<div class="empty-message">Belum ada tamu. Mulai dengan menambah tamu.</div>';
+                resultSection.classList.remove('show');
+                return;
+            }
+
+            resultSection.classList.add('show');
+            guestListContainer.innerHTML = guests.map(guest => `
+                <div class="guest-item">
+                    <div class="guest-name">${escapeHtml(guest.name)}</div>
+                    <div class="guest-link">${escapeHtml(guest.link)}</div>
+                    <button type="button" class="btn-copy" data-id="${guest.id}">Salin</button>
+                    <button type="button" class="btn-delete" data-id="${guest.id}">Hapus</button>
+                </div>
+            `).join('');
+
+            // Add event listeners for copy and delete buttons
+            document.querySelectorAll('.btn-copy').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const guestId = btn.getAttribute('data-id');
+                    const guest = guests.find(g => g.id == guestId);
+                    if (guest) {
+                        navigator.clipboard.writeText(guest.link).then(() => {
+                            const feedback = document.createElement('span');
+                            feedback.className = 'copy-feedback';
+                            feedback.textContent = '✓ Disalin!';
+                            feedback.style.display = 'inline-block';
+                            btn.parentElement.appendChild(feedback);
+                            setTimeout(() => feedback.remove(), 2000);
+                        });
+                    }
+                });
+            });
+
+            document.querySelectorAll('.btn-delete').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const guestId = btn.getAttribute('data-id');
+                    if (confirm('Hapus tamu ini?')) {
+                        guests = guests.filter(g => g.id != guestId);
+                        saveGuests();
+                        displayGuests();
+                    }
+                });
+            });
+        }
+
+        // Save guests to localStorage
+        function saveGuests() {
+            localStorage.setItem('guests', JSON.stringify(guests));
+        }
+
+        // Escape HTML to prevent XSS
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Enter key to generate
+        guestNameInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                btnGenerate.click();
+            }
+        });
+    </script>
+</body>
+</html>

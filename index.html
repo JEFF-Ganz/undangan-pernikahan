@@ -1,265 +1,219 @@
-<!DOCTYPE html>
-<html lang="id">
+// -----------------------------------------------------------------
+        // 📋 KONFIGURASI FIREBASE
+        // -----------------------------------------------------------------
+        const firebaseConfig = {
+          apiKey: "AIzaSyCta1ZZZkX-GkJOWWSdDW3devFCle7h-l4",
+          authDomain: "undangan-pernikahan-b7a8d.firebaseapp.com",
+          projectId: "undangan-pernikahan-b7a8d",
+          storageBucket: "undangan-pernikahan-b7a8d.firebasestorage.app",
+          messagingSenderId: "677237645480",
+          appId: "1:677237645480:web:b9891519e185813851229d"
+        };
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Wedding of Rahmat & Novi</title>
+        let db = null;
+        let firebaseInitialized = false;
 
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-</head>
+        try {
+          firebase.initializeApp(firebaseConfig);
+          db = firebase.firestore();
+          firebaseInitialized = true;
+          console.log("✅ Firebase berhasil terhubung!");
+        } catch (error) {
+          console.error("❌ Error Firebase:", error);
+        }
 
-<body>
+        // --- 2. Welcome Screen & Audio Logic ---
+        const btnOpen = document.getElementById('btn-open');
+        const welcomeOverlay = document.getElementById('welcome-overlay');
+        const bgMusic = document.getElementById('bg-music');
+        const guestGreeting = document.getElementById('guest-greeting');
 
-    <!-- Audio Placeholder -->
-    <audio id="bg-music" loop>
-        <source src="music/Christina Perri - A Thousand Years [Official Music Video].mp3" type="audio/mpeg">
-    </audio>
+        const getGuestNameFromUrl = () => {
+          const params = new URLSearchParams(window.location.search);
+          return params.get('nama') || '';
+        };
 
-    <!-- Welcome Overlay -->
-    <div id="welcome-overlay">
-        <div class="welcome-content">
-            <p>THE WEDDING OF</p>
-            <h1>Rahmat & Novi</h1>
-            <p style="letter-spacing: 1px; margin-bottom: 5px;">Kepada Bapak/Ibu/Saudara/i</p>
-            <p id="guest-greeting" style="font-size: 1.2rem; font-weight: 600; color: white; margin-bottom: 2rem;">Tamu Undangan Terhormat</p>
-            <button class="btn-open" id="btn-open">Buka Undangan</button>
-        </div>
-    </div>
+        const updateGreeting = (name) => {
+          if (name && name.trim()) {
+            guestGreeting.textContent = name;
+            return true;
+          }
+          return false;
+        };
 
-    <!-- Hero Section -->
-    <section id="hero">
-        <p>THE WEDDING OF</p>
-        <h1 class="hero-name">Rahmat & Novi</h1>
-        <div class="gold-divider"></div>
-        <p class="date">21 . 06 . 2026</p>
+        const initialGuestName = getGuestNameFromUrl();
+        if (initialGuestName) {
+          updateGreeting(initialGuestName);
+        }
 
-        <div class="countdown-container" id="countdown" style="text-align: center;">
-            <div class="countdown-item"><span id="days">00</span><label>Hari</label></div>
-            <div class="countdown-item"><span id="hours">00</span><label>Jam</label></div>
-            <div class="countdown-item"><span id="minutes">00</span><label>Menit</label></div>
-            <div class="countdown-item"><span id="seconds">00</span><label>Detik</label></div>
-        </div>
-    </section>
+        const openInvitation = () => {
+          welcomeOverlay.classList.add('hidden');
+          bgMusic.play().catch(e => console.log("Autoplay blocked."));
+          document.body.style.overflow = 'auto';
+          reveal();
+        };
 
-    <!-- Quotes -->
-    <section class="section" id="quotes">
-        <div class="quote-text">
-            <p>"Dan di antara tanda-tanda (kebesaran)-Nya ialah Dia menciptakan pasangan-pasangan untukmu dari jenismu
-                sendiri, agar kamu cenderung dan merasa tenteram kepadanya, dan Dia menjadikan di antaramu rasa kasih
-                dan sayang."</p>
-            <p style="margin-top: 15px; font-weight: 600;">(QS. Ar-Rum: 21)</p>
-        </div>
-    </section>
+        if (btnOpen) {
+          btnOpen.addEventListener('click', openInvitation);
+        }
 
-    <!-- Profil Mempelai -->
-    <section class="section reveal" id="profile">
-        <h2>Mempelai</h2>
-        <div class="gold-divider">
-            <span>✧</span>
-        </div>
+        document.body.style.overflow = 'hidden';
 
-        <div class="mempelai-flex">
-            <div class="mempelai-card">
-                <div class="arch-wrapper">
-                    <img src="images/utama/IMG_9102.jpg" onerror="this.src='https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80'" alt="Novi" class="arch-frame">
-                </div>
-                <h3>Novi Anasari Telaumbanua</h3>
-                <p class="parent-name">Putri dari Bapak (Alm) Arosokhi Telaumbanua & (Alm) Ibu Siiam Jawa</p>
-            </div>
+        // --- 3. Reveal on Scroll Logic ---
+        function reveal() {
+          const reveals = document.querySelectorAll(".reveal");
+          for (let i = 0; i < reveals.length; i++) {
+            const windowHeight = window.innerHeight;
+            const elementTop = reveals[i].getBoundingClientRect().top;
+            const elementVisible = 150;
+            if (elementTop < windowHeight - elementVisible) {
+              reveals[i].classList.add("active");
+            }
+          }
+        }
 
-            <div class="ampersand" style="font-size: 4rem;">&</div>
+        window.addEventListener("scroll", reveal);
 
-            <div class="mempelai-card">
-                <div class="arch-wrapper">
-                    <img src="images/utama/IMG_9124.jpg" onerror="this.src='https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80'" alt="Rahmat" class="arch-frame">
-                </div>
-                <h3>Rahmat Adrian</h3>
-                <p class="parent-name">Putra dari Bapak Badri & Ibu Mia</p>
-            </div>
-        </div>
-    </section>
+        // --- 4. Countdown Timer ---
+        const targetDate = new Date("Jun 21, 2026 09:00:00").getTime();
 
-    <!-- Our Story -->
-    <section class="section" id="story">
-        <h2>Kisah Cinta</h2>
-        <div class="gold-divider"></div>
+        const updateCountdown = () => {
+          const now = new Date().getTime();
+          const distance = targetDate - now;
 
-        <div class="timeline">
-            <div class="timeline-item">
-                <div class="timeline-content">
-                    <h4>Awal Bertemu</h4>
-                    <p style="text-align: justify;">Takdir mempertemukan kami di sebuah tempat kerja di Batam. Di tengah
-                        kesibukan dan rutinitas pekerjaan, kami mulai saling mengenal satu sama lain. Berawal dari
-                        sapaan sederhana, percakapan ringan, hingga kebersamaan dalam menjalani hari-hari kerja,
-                        perlahan tumbuh rasa nyaman yang tidak pernah kami duga sebelumnya. Dari pertemuan yang
-                        sederhana itulah kisah kami dimulai.</p>
-                </div>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-content">
-                    <h4>Menjalin Hubungan</h4>
-                    <p style="text-align: justify;">Seiring berjalannya waktu, kedekatan kami semakin erat. Kami belajar
-                        memahami perbedaan, saling mendukung dalam suka maupun duka, serta tumbuh bersama menjadi
-                        pribadi yang lebih baik. Jarak, kesibukan, dan berbagai tantangan yang datang tidak mampu
-                        mengurangi keyakinan kami untuk terus berjalan bersama. Setiap momen yang dilalui semakin
-                        menguatkan bahwa kami adalah bagian dari perjalanan hidup satu sama lain.</p>
-                </div>
-            </div>
-            <div class="timeline-item">
-                <div class="timeline-content">
-                    <h4>Lamaran</h4>
-                    <p style="text-align: justify;">Setelah melalui perjalanan yang penuh cerita, kami memantapkan hati
-                        untuk melangkah ke tahap yang lebih serius. Dengan niat yang tulus dan restu dari kedua
-                        keluarga, acara lamaran menjadi momen berharga yang menandai kesungguhan kami dalam membangun
-                        masa depan bersama. Hari itu menjadi langkah awal menuju janji suci pernikahan yang telah kami
-                        impikan.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+          if (distance < 0) {
+            document.getElementById('countdown').innerHTML = "ACARA SEDANG BERLANGSUNG";
+            return;
+          }
 
-    <!-- Event Detail -->
-    <section class="section" id="events">
-        <h2>Acara Pernikahan</h2>
-        <div class="gold-divider"></div>
+          const d = Math.floor(distance / (1000 * 60 * 60 * 24));
+          const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+          const s = Math.floor((distance % (1000 * 60)) / 1000);
 
-        <div class="event-grid">
-            <div class="event-card">
-                <h3 style="color: white;"><em>Pemberkatan / Akad</em></h3>
-                <p>Kamis, 31 Desember 2026</p>
-                <p>09:00 WIB - Selesai</p>
-                <p>Masjid Agung Raja Hamidah Kota Batam</p>
+          document.getElementById('days').innerText = d.toString().padStart(2, '0');
+          document.getElementById('hours').innerText = h.toString().padStart(2, '0');
+          document.getElementById('minutes').innerText = m.toString().padStart(2, '0');
+          document.getElementById('seconds').innerText = s.toString().padStart(2, '0');
+        };
 
-                <iframe class="maps-iframe"
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.057416399478!2d104.049444!3d1.1190555!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31d98921ec566415%3A0xc62269a910ab31!2sMasjid%20Agung%20Raja%20Hamidah%20Batam!5e0!3m2!1sid!2sid!4v1700000000000!5m2!1sid!2sid"
-                    allowfullscreen="" loading="lazy"></iframe>
-                <br>
-                <a href="https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2pFeWJuQnZOSGQ2YVZGcWIyNXNjelkwWld4ek1FRRAB!2m1!1s0x0:0xdd54d081bade3cff!3m1!1s2@1:CAIQACodChtycF9oOjEybnBvNHd6aVFqb25sczY0ZWxzMEE%7C%7C?hl=id&g_ep=Eg1tbF8yMDI2MDYwMl8wKgBIAlAC"
-                    target="_blank" class="btn-maps">Buka di Google Maps</a>
-            </div>
-        </div>
-    </section>
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
 
-    <!-- Gallery Grid -->
-    <section id="gallery">
-        <div class="section" style="padding-bottom: 20px;">
-            <h2 style="color: white;">Galeri Foto</h2>
-            <div class="gold-divider"></div>
-        </div>
-        
-        <div class="gallery-grid reveal">
-            <div class="gallery-item">
-                <img src="images/galeri/1.jpg" onerror="this.src='https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=500&q=80'" alt="Wedding Photo 1">
-            </div>
-            <div class="gallery-item">
-                <img src="images/galeri/2.jpg" onerror="this.src='https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=500&q=80'" alt="Wedding Photo 2">
-            </div>
-            <div class="gallery-item">
-                <img src="images/galeri/3.jpg" onerror="this.src='https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=500&q=80'" alt="Wedding Photo 3">
-            </div>
-            <div class="gallery-item">
-                <img src="images/galeri/4.jpg" onerror="this.src='https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=500&q=80'" alt="Wedding Photo 4">
-            </div>
-            <div class="gallery-item">
-                <img src="images/galeri/5.jpg" onerror="this.src='https://images.unsplash.com/photo-1600038128558-867160ba26c9?auto=format&fit=crop&w=500&q=80'" alt="Wedding Photo 5">
-            </div>
-            <div class="gallery-item">
-                <img src="images/galeri/6.jpg" onerror="this.src='https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=500&q=80'" alt="Wedding Photo 6">
-            </div>
-            <div class="gallery-item">
-                <img src="images/galeri/7.jpg" onerror="this.src='https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=500&q=80'" alt="Wedding Photo 6">
-            </div>
-            <div class="gallery-item">
-                <img src="images/galeri/8.jpg" onerror="this.src='https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=500&q=80'" alt="Wedding Photo 6">
-            </div>
-        </div>
-    </section>
+        // --- 5. Copy Rekening ---
+        function copyRekening(elementId, btn) {
+            const rekText = document.getElementById(elementId).innerText;
+            navigator.clipboard.writeText(rekText).then(() => {
+                const originalText = btn.innerText;
+                btn.innerText = "Tersalin!";
+                btn.style.background = "var(--gold-light)";
+                setTimeout(() => {
+                    btn.innerText = originalText;
+                    btn.style.background = "var(--gold)";
+                }, 2000);
+            });
+        }
 
-    <!-- RSVP -->
-    <section class="section reveal" id="rsvp">
-        <h2>Konfirmasi Kehadiran</h2>
-        <div class="gold-divider"></div>
-        <div class="rsvp-form">
-            <form id="form-rsvp">
-                <div class="form-group">
-                    <label>Nama Lengkap</label>
-                    <input type="text" id="name" required>
-                </div>
-                <div class="form-group">
-                    <label>Kehadiran</label>
-                    <select id="attendance" required>
-                        <option value="">-- Pilih --</option>
-                        <option value="Hadir">Hadir</option>
-                        <option value="Tidak Hadir">Tidak Hadir</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Jumlah Tamu</label>
-                    <input type="number" id="guests" min="1" max="10" value="1">
-                </div>
-                <div class="form-group">
-                    <label>Pesan</label>
-                    <textarea id="message" rows="4"></textarea>
-                </div>
-                <button type="submit" class="btn-submit">Kirim Konfirmasi</button>
-            </form>
-            <div id="guestbook-container"></div>
-        </div>
-    </section>
+        // --- 6. RSVP & GUESTBOOK FIREBASE ---
+        const rsvpForm = document.getElementById('form-rsvp');
+        const guestbookContainer = document.getElementById('guestbook-container');
 
-    <!-- Gift -->
-    <section class="section reveal" id="gifts">
-        <h2>Wedding Gift</h2>
-        <div class="gold-divider"></div>
+        if (rsvpForm) {
+          rsvpForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            if (!firebaseInitialized || !db) {
+              alert('Pesan disimpan secara lokal (mode pratinjau).');
+              const name = document.getElementById('name').value;
+              const attendance = document.getElementById('attendance').value;
+              const message = document.getElementById('message').value;
+              const card = document.createElement('div');
+              card.style.cssText = "background: #f9f9f9; padding: 15px; margin-top: 10px; border-left: 4px solid #D4AF37;";
+              card.innerHTML = `<strong>${name}</strong> <small>(${attendance})</small><p>${message}</p>`;
+              guestbookContainer.prepend(card);
+              rsvpForm.reset();
+              return;
+            }
+            
+            const name = document.getElementById('name').value.trim();
+            const phone = document.getElementById('guests').value;
+            const attendance = document.getElementById('attendance').value;
+            const message = document.getElementById('message').value.trim();
 
-        <!-- Teks Pengantar Wedding Gift -->
-        <p class="gift-intro">
-            Doa restu Anda merupakan karunia yang sangat berarti bagi kami. Namun jika Bapak/Ibu/Saudara/i ingin memberikan tanda kasih untuk kami, dapat melalui fitur di bawah ini. Sebelumnya kami ucapkan terima kasih.
-        </p>
+            if (!name || !attendance) {
+              alert('Mohon isi nama dan konfirmasi kehadiran!');
+              return;
+            }
 
-        <div class="gift-box">
-            <h4 style="color: var(--maroon);">Bank Mandiri</h4>
-            <p>No. Rekening: <span id="rek1">1090018781500</span></p>
-            <p>a.n Novi Anasari Telaumbanua</p>
+            try {
+              await db.collection("rsvp").add({
+                name: name,
+                phone: phone,
+                attendance: attendance,
+                message: message,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+              });
 
-            <button class="copy-btn" onclick="copyRekening('rek1', this)">
-                Salin Rekening
-            </button>
-        </div>
+              await db.collection("guestbook").add({
+                name: name,
+                message: message,
+                attendance: attendance,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+              });
 
-        <div class="gift-box">
-            <h4 style="color: var(--maroon);">Bank BCA</h4>
-            <p>No. Rekening: <span id="rek2">3262854563</span></p>
-            <p>a.n Rahmat Adrian</p>
+              rsvpForm.reset();
+              alert('Terima kasih atas konfirmasi dan doanya!');
 
-            <button class="copy-btn" onclick="copyRekening('rek2', this)">
-                Salin Rekening
-            </button>
-        </div>
-    </section>
+            } catch (error) {
+              console.error('Error:', error);
+              alert('Gagal mengirim. Coba lagi!');
+            }
+          });
+        }
 
-    <!-- Closing -->
-    <section id="closing">
-        <div class="qoutes">Dari tanah Nias yang teguh diterpa ombak hingga tepian Sungai Musi yang membelah indah Kota
-            Palembang, takdir mempertemukan dua hati dalam satu perjalanan cinta. Perbedaan suku, budaya, dan adat
-            bukanlah jarak yang memisahkan, melainkan warna-warni yang memperkaya kisah kami. Dengan kasih yang tumbuh
-            seiring waktu, atas izin Tuhan Yang Maha Esa serta restu kedua orang tua, kami melangkah mantap menuju
-            ikatan suci pernikahan, menyatukan dua keluarga dalam satu janji cinta yang abadi.
-        </div>
-        <br>
-        <p>Terima Kasih</p>
-        <h2 class="closing-title">Rahmat & Novi</h2>
-    </section>
-
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-    <script src="script.js"></script>
-</body>
-
-</html>
+        if (guestbookContainer) {
+          if (!firebaseInitialized || !db) {
+            guestbookContainer.innerHTML = `<p style="text-align:center; color:#666; font-style:italic; padding:30px;">Tampilan pesan guestbook sementara.</p>`;
+          } else {
+            db.collection("guestbook")
+              .orderBy("timestamp", "desc")
+              .limit(50)
+              .onSnapshot((querySnapshot) => {
+                guestbookContainer.innerHTML = '';
+                
+                querySnapshot.forEach((doc) => {
+                  const data = doc.data();
+                  const card = document.createElement('div');
+                  card.className = 'comment-card';
+                  const date = data.timestamp ? data.timestamp.toDate() : null;
+                  const dateString = date ? date.toLocaleDateString('id-ID', { 
+                      day: 'numeric', month: 'long', year: 'numeric' 
+                  }) : '';
+                  
+                  card.innerHTML = `
+                      <div class="guest-header" style="display:flex;justify-content:space-between;align-items:center;">
+                          <strong style="font-family: 'Playfair Display', serif; color: #5C001E; font-size: 1.1rem;">
+                              ${data.name}
+                          </strong>
+                          <small style="font-family: 'Montserrat', sans-serif; color: #666; text-transform: uppercase; font-size: 0.7rem;">
+                              ${dateString}
+                          </small>
+                      </div>
+                      <p style="margin-top: 10px; color: #2d2d2d; line-height: 1.6; font-style: italic;">
+                          ${data.message}
+                      </p>
+                      ${data.attendance ? `
+                          <span style="display:inline-block;margin-top:8px;padding:4px 12px; background: rgba(212, 175, 55, 0.15);
+                              color: #5C001E; border-radius: 4px; font-family: 'Montserrat', sans-serif;
+                              font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px;">
+                              ${data.attendance === 'Hadir' ? 'Berencana Hadir' : 'Tidak Bisa Hadir'}
+                          </span>
+                      ` : ''}
+                  `;
+                  guestbookContainer.appendChild(card);
+                });
+              }, (error) => {
+                console.error("Error load guestbook:", error);
+              });
+          }
+        }

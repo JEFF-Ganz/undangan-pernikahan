@@ -9,10 +9,7 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
-        rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -27,7 +24,7 @@
     <div id="welcome-overlay">
         <div class="welcome-content">
             <p>THE WEDDING OF</p>
-            <h1>Rahmt & Novi</h1>
+            <h1>Rahmat & Novi</h1>
             <p style="letter-spacing: 1px; margin-bottom: 5px;">Kepada Bapak/Ibu/Saudara/i</p>
             <p id="guest-greeting" style="font-size: 1.2rem; font-weight: 600; color: white; margin-bottom: 2rem;">Tamu Undangan Terhormat</p>
             <button class="btn-open" id="btn-open">Buka Undangan</button>
@@ -69,7 +66,7 @@
         <div class="mempelai-flex">
             <div class="mempelai-card">
                 <div class="arch-wrapper">
-                    <img src="images/utama/IMG_9102.jpg" alt="Novi" class="arch-frame">
+                    <img src="images/utama/IMG_9102.jpg" onerror="this.src='https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80'" alt="Novi" class="arch-frame">
                 </div>
                 <h3>Novi Anasari Telaumbanua</h3>
                 <p class="parent-name">Putri dari Bapak (Alm) Arosokhi Telaumbanua & (Alm) Ibu Siiam Jawa</p>
@@ -79,10 +76,10 @@
 
             <div class="mempelai-card">
                 <div class="arch-wrapper">
-                    <img src="images/utama/IMG_9124.jpg" alt="Rahmat" class="arch-frame">
+                    <img src="images/utama/IMG_9124.jpg" onerror="this.src='https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80'" alt="Rahmat" class="arch-frame">
                 </div>
                 <h3>Rahmat Adrian</h3>
-                <p class="parent-name">Putra dari Bapak Badri & Ibu Bia</p>
+                <p class="parent-name">Putra dari Bapak Badri & Ibu Mia</p>
             </div>
         </div>
     </section>
@@ -140,42 +137,51 @@
 
                 <iframe class="maps-iframe"
                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.057416399478!2d104.049444!3d1.1190555!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31d98921ec566415%3A0xc62269a910ab31!2sMasjid%20Agung%20Raja%20Hamidah%20Batam!5e0!3m2!1sid!2sid!4v1700000000000!5m2!1sid!2sid"
-                    allowfullscreen="" loading="lazy" style="border:0; width: 100%; height: 300px;"></iframe>
+                    allowfullscreen="" loading="lazy"></iframe>
                 <br>
                 <a href="https://www.google.com/maps/reviews/data=!4m8!14m7!1m6!2m5!1sCi9DQUlRQUNvZENodHljRjlvT2pFeWJuQnZOSGQ2YVZGcWIyNXNjelkwWld4ek1FRRAB!2m1!1s0x0:0xdd54d081bade3cff!3m1!1s2@1:CAIQACodChtycF9oOjEybnBvNHd6aVFqb25sczY0ZWxzMEE%7C%7C?hl=id&g_ep=Eg1tbF8yMDI2MDYwMl8wKgBIAlAC"
                     target="_blank" class="btn-maps">Buka di Google Maps</a>
             </div>
         </div>
-        </div>
     </section>
 
-    <!-- Gallery -->
+    <!-- Gallery Grid -->
     <section id="gallery">
         <div class="section" style="padding-bottom: 20px;">
             <h2 style="color: white;">Galeri Foto</h2>
             <div class="gold-divider"></div>
         </div>
-        <div class="gallery-container">
-            <div class="marquee-track" id="marquee">
-                <img src="images/galeri/1.jpg" class="gallery-img">
-                <img src="images/galeri/2.jpg" class="gallery-img">
-                <img src="images/galeri/3.jpg" class="gallery-img">
-                <img src="images/galeri/4.jpg" class="gallery-img">
-                <img src="images/galeri/5.jpg" class="gallery-img">
-                <img src="images/galeri/6.jpg" class="gallery-img">
-                <!-- Duplicate for infinite -->
-                <img src="images/galeri/1.jpg" class="gallery-img">
-                <img src="images/galeri/2.jpg" class="gallery-img">
-                <img src="images/galeri/3.jpg" class="gallery-img">
-                <img src="images/galeri/4.jpg" class="gallery-img">
-                <img src="images/galeri/5.jpg" class="gallery-img">
-                <img src="images/galeri/6.jpg" class="gallery-img">
+        
+        <div class="gallery-grid reveal">
+            <div class="gallery-item">
+                <img src="images/galeri/1.jpg" onerror="this.src='https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=500&q=80'" alt="Wedding Photo 1">
+            </div>
+            <div class="gallery-item">
+                <img src="images/galeri/2.jpg" onerror="this.src='https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=500&q=80'" alt="Wedding Photo 2">
+            </div>
+            <div class="gallery-item">
+                <img src="images/galeri/3.jpg" onerror="this.src='https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=500&q=80'" alt="Wedding Photo 3">
+            </div>
+            <div class="gallery-item">
+                <img src="images/galeri/4.jpg" onerror="this.src='https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=500&q=80'" alt="Wedding Photo 4">
+            </div>
+            <div class="gallery-item">
+                <img src="images/galeri/5.jpg" onerror="this.src='https://images.unsplash.com/photo-1600038128558-867160ba26c9?auto=format&fit=crop&w=500&q=80'" alt="Wedding Photo 5">
+            </div>
+            <div class="gallery-item">
+                <img src="images/galeri/6.jpg" onerror="this.src='https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=500&q=80'" alt="Wedding Photo 6">
+            </div>
+            <div class="gallery-item">
+                <img src="images/galeri/7.jpg" onerror="this.src='https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=500&q=80'" alt="Wedding Photo 6">
+            </div>
+            <div class="gallery-item">
+                <img src="images/galeri/8.jpg" onerror="this.src='https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=500&q=80'" alt="Wedding Photo 6">
             </div>
         </div>
     </section>
 
     <!-- RSVP -->
-    <section class="section" id="rsvp">
+    <section class="section reveal" id="rsvp">
         <h2>Konfirmasi Kehadiran</h2>
         <div class="gold-divider"></div>
         <div class="rsvp-form">
@@ -194,7 +200,7 @@
                 </div>
                 <div class="form-group">
                     <label>Jumlah Tamu</label>
-                    <input type="number" id="guests" min="1" max="5" value="1">
+                    <input type="number" id="guests" min="1" max="10" value="1">
                 </div>
                 <div class="form-group">
                     <label>Pesan</label>
@@ -207,14 +213,33 @@
     </section>
 
     <!-- Gift -->
-    <section class="section" id="gifts">
+    <section class="section reveal" id="gifts">
         <h2>Wedding Gift</h2>
         <div class="gold-divider"></div>
+
+        <!-- Teks Pengantar Wedding Gift -->
+        <p class="gift-intro">
+            Doa restu Anda merupakan karunia yang sangat berarti bagi kami. Namun jika Bapak/Ibu/Saudara/i ingin memberikan tanda kasih untuk kami, dapat melalui fitur di bawah ini. Sebelumnya kami ucapkan terima kasih.
+        </p>
+
         <div class="gift-box">
             <h4 style="color: var(--maroon);">Bank Mandiri</h4>
-            <p>No. Rekening: 1090018781500</p>
+            <p>No. Rekening: <span id="rek1">1090018781500</span></p>
             <p>a.n Novi Anasari Telaumbanua</p>
-            <img src="images/images.png" alt="QRIS" class="qr-code">
+
+            <button class="copy-btn" onclick="copyRekening('rek1', this)">
+                Salin Rekening
+            </button>
+        </div>
+
+        <div class="gift-box">
+            <h4 style="color: var(--maroon);">Bank BCA</h4>
+            <p>No. Rekening: <span id="rek2">3262854563</span></p>
+            <p>a.n Rahmat Adrian</p>
+
+            <button class="copy-btn" onclick="copyRekening('rek2', this)">
+                Salin Rekening
+            </button>
         </div>
     </section>
 
@@ -234,14 +259,6 @@
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-
-    <!-- Custom JS -->
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-
-    <!-- Custom JS -->
-    <script src="script.js"></script>
     <script src="script.js"></script>
 </body>
 

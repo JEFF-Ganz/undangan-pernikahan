@@ -315,7 +315,13 @@
 
         // Generate shareable link
         function generateLink(name) {
-            const baseUrl = window.location.origin + window.location.pathname.replace('admin.html', 'index.html');
+            // Ambil URL saat ini dan hapus query string
+            let baseUrl = window.location.href.split('?')[0];
+            
+            // Ganti admin.html dengan index.html
+            baseUrl = baseUrl.replace(/admin\.html$/, 'index.html');
+            
+            // Tambah parameter nama
             const encodedName = encodeURIComponent(name);
             return `${baseUrl}?nama=${encodedName}`;
         }

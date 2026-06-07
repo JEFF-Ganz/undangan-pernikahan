@@ -98,6 +98,96 @@ body {
     text-transform: uppercase;
 }
 
+/* Guest Name Input Styling */
+.guest-name-input {
+    width: 100%;
+    max-width: 300px;
+    padding: 12px 15px;
+    border: 2px solid var(--gold);
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    text-align: center;
+    margin-bottom: 12px;
+    transition: all 0.3s ease;
+    display: none;
+}
+
+.guest-name-input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.guest-name-input:focus {
+    background-color: rgba(255, 255, 255, 0.15);
+    border-color: var(--gold-light);
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+}
+
+.btn-confirm-name {
+    display: none;
+    margin: 0 auto 1.5rem;
+    padding: 10px 30px;
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    color: var(--dark-maroon);
+    border: none;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    font-family: var(--font-sans);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-confirm-name:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4);
+}
+
+.btn-confirm-name:active {
+    transform: translateY(0);
+}
+
+#guest-input-container {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+}
+
+.btn-copy-link {
+    display: none;
+    margin: 0 auto 1.5rem;
+    padding: 10px 30px;
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    color: var(--dark-maroon);
+    border: none;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    font-family: var(--font-sans);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-copy-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4);
+}
+
+.btn-copy-link:active {
+    transform: translateY(0);
+}
+
+#copy-feedback {
+    display: none;
+    animation: fadeInOut 3s ease-in-out forwards;
+}
+
 .welcome-content h1 {
     font-family: var(--font-title);
     font-size: clamp(2.8rem, 10vw, 4.5rem);

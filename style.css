@@ -71,8 +71,8 @@ body {
     position: absolute;
     width: 100%;
     height: 100%;
-    background-image: url('images/utama/IMG_9780.jpg');
-    opacity: 0.1;
+    background-image: url('images/utama/welcome.jpeg');
+    opacity: 0.19;
     pointer-events: none;
     background-size: cover;
     background-position: center;
@@ -96,96 +96,6 @@ body {
     margin-bottom: 1rem;
     color: var(--gold-light);
     text-transform: uppercase;
-}
-
-/* Guest Name Input Styling */
-.guest-name-input {
-    width: 100%;
-    max-width: 300px;
-    padding: 12px 15px;
-    border: 2px solid var(--gold);
-    border-radius: 4px;
-    background-color: rgba(255, 255, 255, 0.1);
-    color: white;
-    font-family: var(--font-sans);
-    font-size: 1rem;
-    text-align: center;
-    margin-bottom: 12px;
-    transition: all 0.3s ease;
-    display: none;
-}
-
-.guest-name-input::placeholder {
-    color: rgba(255, 255, 255, 0.6);
-}
-
-.guest-name-input:focus {
-    background-color: rgba(255, 255, 255, 0.15);
-    border-color: var(--gold-light);
-    box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
-}
-
-.btn-confirm-name {
-    display: none;
-    margin: 0 auto 1.5rem;
-    padding: 10px 30px;
-    background: linear-gradient(135deg, var(--gold), var(--gold-light));
-    color: var(--dark-maroon);
-    border: none;
-    border-radius: 4px;
-    font-weight: 600;
-    font-size: 0.95rem;
-    font-family: var(--font-sans);
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.btn-confirm-name:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4);
-}
-
-.btn-confirm-name:active {
-    transform: translateY(0);
-}
-
-#guest-input-container {
-    display: none;
-    flex-direction: column;
-    align-items: center;
-}
-
-.btn-copy-link {
-    display: none;
-    margin: 0 auto 1.5rem;
-    padding: 10px 30px;
-    background: linear-gradient(135deg, var(--gold), var(--gold-light));
-    color: var(--dark-maroon);
-    border: none;
-    border-radius: 4px;
-    font-weight: 600;
-    font-size: 0.95rem;
-    font-family: var(--font-sans);
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.btn-copy-link:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4);
-}
-
-.btn-copy-link:active {
-    transform: translateY(0);
-}
-
-#copy-feedback {
-    display: none;
-    animation: fadeInOut 3s ease-in-out forwards;
 }
 
 .welcome-content h1 {
@@ -663,49 +573,56 @@ h2 {
     box-shadow: var(--shadow-gold);
 }
 
-/* --- Gallery Marquee --- */
+/* --- Gallery Grid --- */
 #gallery {
     background: linear-gradient(135deg, var(--maroon) 0%, var(--dark-maroon) 100%);
-    padding: 50px 0;
+    padding: 80px 20px;
 }
 
-.gallery-container {
-    width: 100%;
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    max-width: 1100px;
+    margin: 40px auto 0;
+    padding: 0 10px;
+}
+
+.gallery-item {
+    position: relative;
     overflow: hidden;
-    padding: 40px 0;
-    border-top: 1px solid rgba(212, 175, 55, 0.3);
-    border-bottom: 1px solid rgba(212, 175, 55, 0.3);
-}
-
-.marquee-track {
-    display: flex;
-    width: max-content;
-    animation: scroll 35s linear infinite;
-}
-
-.marquee-track.paused {
-    animation-play-state: paused;
-}
-
-.gallery-img {
-    height: 300px;
-    width: 230px;
-    object-fit: cover;
-    margin: 0 10px;
-    border-radius: 10px;
-    border: 2px solid rgba(212, 175, 55, 0.4);
+    border-radius: 12px;
+    border: 2px solid rgba(212, 175, 55, 0.3);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+    aspect-ratio: 3 / 4;
+    background-color: var(--dark-maroon);
     cursor: pointer;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
-@keyframes scroll {
-    0% {
-        transform: translateX(0);
-    }
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s ease;
+    display: block;
+}
 
-    100% {
-        transform: translateX(-50%);
-    }
+.gallery-item::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(92, 0, 30, 0.6) 0%, transparent 50%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+}
+
+.gallery-item:hover img {
+    transform: scale(1.1);
+}
+
+.gallery-item:hover::after {
+    opacity: 1;
 }
 
 /* --- RSVP Form --- */
@@ -814,9 +731,17 @@ h2 {
 }
 
 /* --- Gift --- */
+.gift-intro {
+    max-width: 650px;
+    margin: 0 auto 35px;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--text-dark);
+}
+
 .gift-box {
     max-width: 500px;
-    margin: 40px auto;
+    margin: 0 auto 30px;
     background: white;
     padding: 40px;
     border-radius: 15px;
@@ -836,18 +761,26 @@ h2 {
     color: var(--text-dark);
 }
 
-.qr-code {
-    width: 180px;
-    margin-top: 25px;
-    border: 2px solid var(--gold);
-    border-radius: 10px;
-    padding: 10px;
+.copy-btn {
+    margin-top: 15px;
+    padding: 8px 20px;
+    background: var(--gold);
+    color: var(--maroon);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+.copy-btn:hover {
+    background: var(--gold-light);
 }
 
 /* --- Closing --- */
 #closing {
     min-height: 100vh;
-    background: linear-gradient(rgba(61, 1, 20, 0.9), rgba(61, 1, 20, 0.9)), url('images/utama/IMG_9071.jpg') center/cover no-repeat;
+    background: linear-gradient(rgba(61, 1, 20, 0.9), rgba(61, 1, 20, 0.5)), url('images/utama/IMG_9071.jpg') center/cover no-repeat;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -875,18 +808,14 @@ h2 {
 
 /* --- RESPONSIVE DESIGN --- */
 @media (max-width: 768px) {
-
-    /* Welcome Overlay */
     .welcome-content h1 {
         font-size: 3.2rem;
     }
 
-    /* Sections */
     .section {
         padding: 60px 15px;
     }
 
-    /* Hero */
     #hero {
         padding: 20px;
     }
@@ -895,7 +824,6 @@ h2 {
         font-size: 3.5rem;
     }
 
-    /* Countdown */
     .countdown-container {
         gap: 10px;
         margin-top: 30px;
@@ -915,7 +843,6 @@ h2 {
         letter-spacing: 1px;
     }
 
-    /* Profil Mempelai */
     .mempelai-flex {
         gap: 30px;
         flex-direction: column;
@@ -945,7 +872,6 @@ h2 {
         border-width: 6px;
     }
 
-    /* Timeline */
     .timeline::after {
         left: 30px;
         width: 3px;
@@ -987,35 +913,31 @@ h2 {
         top: 32px;
     }
 
-    /* Events */
     .event-card {
         padding: 35px 25px;
     }
 
-    /* Gallery */
-    .gallery-img {
-        height: 250px;
-        width: 190px;
+    .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
     }
 
-    /* RSVP Form */
     .rsvp-form {
         padding: 35px 25px;
     }
 
-    /* Gift Box */
-    .gift-box {
-        padding: 30px 25px;
+    .gift-intro {
+        padding: 0 15px;
+        font-size: 0.9rem;
     }
 
-    .qr-code {
-        width: 160px;
+    .gift-box {
+        padding: 30px 25px;
+        margin-bottom: 20px;
     }
 }
 
 @media (max-width: 480px) {
-
-    /* Welcome Overlay */
     .welcome-content p:first-child {
         font-size: 0.7rem;
         letter-spacing: 3px;
@@ -1030,12 +952,10 @@ h2 {
         font-size: 0.75rem;
     }
 
-    /* Hero */
     .hero-name {
         font-size: 2.8rem;
     }
 
-    /* Countdown */
     .countdown-container {
         gap: 8px;
     }
@@ -1049,7 +969,6 @@ h2 {
         font-size: 1.4rem;
     }
 
-    /* Profil Mempelai */
     .mempelai-flex {
         gap: 20px;
     }
@@ -1071,7 +990,6 @@ h2 {
         font-size: 1.3rem;
     }
 
-    /* Timeline */
     .timeline {
         padding: 20px 0;
     }
@@ -1110,18 +1028,15 @@ h2 {
         font-size: 1.25rem;
     }
 
-    /* Events */
     .event-grid {
         grid-template-columns: 1fr;
     }
 
-    /* Gallery */
-    .gallery-img {
-        height: 220px;
-        width: 170px;
+    .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
     }
 
-    /* RSVP */
     .rsvp-form {
         padding: 30px 20px;
     }
